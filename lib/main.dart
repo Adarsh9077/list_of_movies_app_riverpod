@@ -18,7 +18,7 @@ void main() {
     // DeviceOrientation.landscapeRight,
   ]).then((_) async {
     await dotenv.load(fileName: "assets/.env");
-    runApp(const MyApp());
+    runApp(ProviderScope(child: const MyApp()));
   });
 }
 

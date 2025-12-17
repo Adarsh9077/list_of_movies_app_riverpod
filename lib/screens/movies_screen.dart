@@ -1,4 +1,11 @@
+// import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mvvm_statemanagements/enums/theme_enums.dart';
+import 'package:mvvm_statemanagements/view_models/theme_provider.dart';
 
 import '../constants/my_app_icons.dart';
 import '../service/init_getit.dart';
@@ -6,11 +13,12 @@ import '../service/navigation_service.dart';
 import '../widgets/movies/movies_widget.dart';
 import 'favorites_screen.dart';
 
-class MoviesScreen extends StatelessWidget {
+class MoviesScreen extends ConsumerWidget {
   const MoviesScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeState = ref.watch(themeProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Popular Movies"),
@@ -35,9 +43,12 @@ class MoviesScreen extends StatelessWidget {
               // await getIt<ApiService>().fetchGenres();
 
               // log("Genres are $genres");
+              await ref.read(themeProvider.notifier).toggleTheme();
             },
-            icon: const Icon(
-              MyAppIcons.darkMode,
+            icon: Icon(
+              themeState == ThemeEnums.light
+                  ? MyAppIcons.darkMode
+                  : MyAppIcons.lightMode,
             ),
           ),
         ],
