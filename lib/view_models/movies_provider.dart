@@ -4,6 +4,11 @@ import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/view_models/movies_state.dart';
 import 'package:riverpod/legacy.dart';
 
+
+final moviesProvider = StateNotifierProvider<MoviesProvider,MovieState>(
+  (ref) => MoviesProvider(),
+);
+
 class MoviesProvider extends StateNotifier<MovieState> {
   MoviesProvider() : super(MovieState());
 
