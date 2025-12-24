@@ -7,7 +7,7 @@ class MovieState {
   final List<MovieModel> moviesList;
   final List<MoviesGenre> genresList;
   final bool isLoading;
-  final String? fetchMoviesError;
+  final String fetchMoviesError;
 
   MovieState(
       {this.currentPage = 1,
