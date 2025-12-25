@@ -3,12 +3,17 @@ import 'package:mvvm_statemanagements/repository/movies_repo.dart';
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/view_models/movies_state.dart';
 import 'package:riverpod/legacy.dart';
+import 'package:riverpod/riverpod.dart';
 
 
 final moviesProvider = StateNotifierProvider<MoviesProvider,MovieState>(
   (ref) => MoviesProvider(),
 );
 
+final currentMovie = Provider.family<MovieModel,int>((ref, index) {
+  final movieState = ref.watch(moviesProvider);
+  return movieState.moviesList[index];
+},);
 class MoviesProvider extends StateNotifier<MovieState> {
   MoviesProvider() : super(MovieState());
 

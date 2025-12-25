@@ -43,6 +43,7 @@ class MoviesScreen extends ConsumerWidget {
 
                 // log("Genres are $genres");
                 await ref.read(themeProvider.notifier).toggleTheme();
+                log("message");
               },
               icon: Icon(
                 themeState == ThemeEnums.light
@@ -78,7 +79,9 @@ class MoviesScreen extends ConsumerWidget {
                 child: ListView.builder(
                   itemCount: movieState.moviesList.length,
                   itemBuilder: (context, index) {
-                    return Placeholder();
+                    return MoviesWidget(
+                      index: index,
+                    );
                   },
                 ));
           },
