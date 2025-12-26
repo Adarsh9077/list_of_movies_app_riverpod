@@ -19,79 +19,83 @@ class MoviesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeState = ref.watch(themeProvider);
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Popular Movies"),
-          actions: [
-            IconButton(
-              onPressed: () {
-                // getIt<NavigationService>().showSnackbar();
-                // getIt<NavigationService>().showDialog(MoviesWidget());
-                getIt<NavigationService>().navigate(const FavoritesScreen());
-              },
-              icon: const Icon(
-                MyAppIcons.favoriteRounded,
-                color: Colors.red,
-              ),
+      appBar: AppBar(
+        title: const Text("Popular Movies"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // getIt<NavigationService>().showSnackbar();
+              // getIt<NavigationService>().showDialog(MoviesWidget());
+              getIt<NavigationService>().navigate(const FavoritesScreen());
+            },
+            icon: const Icon(
+              MyAppIcons.favoriteRounded,
+              color: Colors.red,
             ),
-            IconButton(
-              onPressed: () async {
-                // final List<MovieModel> movies = await getIt<ApiService>().fetchMovies();
-                // log("movies $movies");
-                // final List<MoviesGenre> genres =
-                //     await getIt<MoviesRepository>().fetchGenres();
-                // await getIt<ApiService>().fetchGenres();
+          ),
+          IconButton(
+            onPressed: () async {
+              // final List<MovieModel> movies = await getIt<ApiService>().fetchMovies();
+              // log("movies $movies");
+              // final List<MoviesGenre> genres =
+              //     await getIt<MoviesRepository>().fetchGenres();
+              // await getIt<ApiService>().fetchGenres();
 
-                // log("Genres are $genres");
-                await ref.read(themeProvider.notifier).toggleTheme();
-                log("message");
-              },
-              icon: Icon(
-                themeState == ThemeEnums.light
-                    ? MyAppIcons.darkMode
-                    : MyAppIcons.lightMode,
-              ),
+              // log("Genres are $genres");
+              await ref.read(themeProvider.notifier).toggleTheme();
+              log("message");
+            },
+            icon: Icon(
+              themeState == ThemeEnums.light
+                  ? MyAppIcons.darkMode
+                  : MyAppIcons.lightMode,
             ),
-          ],
-        ),
-        body: Consumer(
-          builder: (context, WidgetRef ref, child) {
-            final movieState = ref.watch(moviesProvider);
+          ),
+        ],
+      ),
+      body:
+      Consumer(
+        builder: (context, WidgetRef ref, child) {
+          final movieState = ref.watch(moviesProvider);
 
-            if (movieState.isLoading && movieState.moviesList.isEmpty) {
-              return Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            } else if (movieState.fetchMoviesError.isEmpty) {
-              return Center(
-                child: Text(movieState.fetchMoviesError),
-              );
-            }
-            return NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification scrollinfo) {
-                  if (scrollinfo.metrics.pixels ==
-                          scrollinfo.metrics.maxScrollExtent &&
-                      !movieState.isLoading) {
-                    ref.read(moviesProvider.notifier).getMovies();
-                    return true;
-                  }
-                  return false;
+          if (movieState.isLoading && movieState.moviesList.isEmpty) {
+            return Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
+          } else if (movieState.fetchMoviesError.isEmpty) {
+            return Center(
+              child: Text(movieState.fetchMoviesError),
+            );
+          }
+          return NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollinfo) {
+                if (scrollinfo.metrics.pixels ==
+                        scrollinfo.metrics.maxScrollExtent &&
+                    !movieState.isLoading) {
+                  ref.read(moviesProvider.notifier).getMovies();
+                  return true;
+                }
+                return true;
+              },
+              child: ListView.builder(
+                itemCount: movieState.moviesList.length,
+                itemBuilder: (context, index) {
+                  return MoviesWidget(
+                    index: index,
+                  );
                 },
-                child: ListView.builder(
-                  itemCount: movieState.moviesList.length,
-                  itemBuilder: (context, index) {
-                    return MoviesWidget(
-                      index: index,
-                    );
-                  },
-                ));
-          },
-        )
-        // ListView.builder(
-        //   itemCount: 10,
-        //   itemBuilder: (context, index) {
-        //     return MoviesWidget();
-        //   },
-        // ),
-        );
+              ));
+        },
+      )
+      // body: ListView.builder(
+        // itemCount: 10,
+      //   itemBuilder: (context, index) {
+      //     return MoviesWidget(
+      //       index: 0,
+      //     );
+      //   },
+      // ),
+    );
+    // );
   }
 }

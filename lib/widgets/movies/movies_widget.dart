@@ -31,7 +31,7 @@ class MoviesWidget extends ConsumerWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12.0),
           onTap: () {
-            getIt<NavigationService>().navigate(const MovieDetailsScreen());
+            getIt<NavigationService>().navigate(MovieDetailsScreen(index:index));
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
