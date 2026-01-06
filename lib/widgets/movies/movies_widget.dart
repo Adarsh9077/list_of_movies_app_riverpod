@@ -22,7 +22,7 @@ class MoviesWidget extends ConsumerWidget {
   final int index;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movieState = ref.watch(currentMovie(9));
+    final movieState = ref.watch(currentMovie(index));
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(

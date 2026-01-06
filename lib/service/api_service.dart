@@ -7,6 +7,7 @@ import 'package:mvvm_statemanagements/models/movies_model.dart';
 
 class ApiService {
   Future<List<MovieModel>> fetchMovies({int page = 1}) async {
+    print("object ApiService {");
     final url = Uri.parse(
         "${ApiConstants.baseUrl}/movie/popular?language=en-US&page=$page");
     final response = await http
@@ -14,7 +15,6 @@ class ApiService {
         .timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      // log("data $data");
       return List.from(
           data['results'].map((element) => MovieModel.fromJson(element)));
     } else {
@@ -25,12 +25,14 @@ class ApiService {
   Future<List<MoviesGenre>> fetchGenres() async {
     final url =
         Uri.parse("${ApiConstants.baseUrl}/genre/movie/list?language=en");
+        print("object fetchGenres()  ${url.data}");
     final response = await http
         .get(url, headers: ApiConstants.headers)
         .timeout(const Duration(seconds: 10));
+        print("object fetchGenres() - ${response.statusCode}");
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      // log("data $data");
+      print("data ${data.toString()}");
       return List.from(
           data['genres'].map((element) => MoviesGenre.fromJson(element)));
     } else {
