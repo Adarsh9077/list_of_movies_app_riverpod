@@ -1,6 +1,12 @@
-import 'package:mvvm_statemanagements/view_models/favorites/favorites_provider.dart';
-import 'package:riverpod/legacy.dart';
+import 'package:mvvm_statemanagements/models/movies_model.dart';
 
-class FavoriteProvider extends StateNotifier<FavoritesState>{
-  FavoriteProvider():super(FavoritesState(favoritesList: []));
+class FavoritesState {
+  final List<MovieModel> favoritesList;
+  FavoritesState({this.favoritesList = const []});
+
+  FavoritesState copyWith({
+    List<MovieModel>? favoritesList,
+  }) {
+    return FavoritesState(favoritesList: favoritesList ?? this.favoritesList);
+  }
 }
