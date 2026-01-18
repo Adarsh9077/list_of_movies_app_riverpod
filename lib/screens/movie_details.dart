@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mvvm_statemanagements/constants/my_app_constants.dart';
 import 'package:mvvm_statemanagements/view_models/movies_provider.dart';
 import 'package:mvvm_statemanagements/widgets/movies/favorite_btn.dart';
-
-import '../models/movies_model.dart';
 import '../widgets/cached_image.dart';
 import '../widgets/movies/genres_list_widget.dart';
 

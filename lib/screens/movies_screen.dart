@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mvvm_statemanagements/enums/theme_enums.dart';
-import 'package:mvvm_statemanagements/models/movies_model.dart';
-import 'package:mvvm_statemanagements/service/api_service.dart';
 import 'package:mvvm_statemanagements/view_models/movies_provider.dart';
 import 'package:mvvm_statemanagements/view_models/theme_provider.dart';
 
