@@ -3,6 +3,10 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:mvvm_statemanagements/enums/theme_enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+final themeProvider = StateNotifierProvider<ThemeProvider, ThemeEnums>(
+  (ref) => ThemeProvider(),
+);
+
 class ThemeProvider extends StateNotifier<ThemeEnums> {
   final prefKey = "isDarkMode";
 
@@ -16,10 +20,10 @@ class ThemeProvider extends StateNotifier<ThemeEnums> {
     state = isDarkMode ? ThemeEnums.light : ThemeEnums.dark;
   }
 
-  Future<void> _toggle () async {
+  Future<void> toggleTheme() async {
     final pref = await SharedPreferences.getInstance();
 
-    if(state == ThemeEnums.light){
+    if (state == ThemeEnums.light) {
       state = ThemeEnums.dark;
       await pref.setBool(prefKey, true);
     } else {
