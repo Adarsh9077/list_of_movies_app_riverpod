@@ -30,36 +30,39 @@ class MoviesScreen extends ConsumerWidget {
               color: Colors.red,
             ),
           ),
-          IconButton(
-            onPressed: () async {
-              // themeState.
-              // final List<MovieModel> movies = await getIt<ApiService>().fetchMovies();
-              // log("movies $movies");
-              // final List<MoviesGenre> genres =
-              //     await getIt<MoviesRepository>().fetchGenres();
-              // await getIt<ApiService>().fetchGenres();
+          Consumer(
+            builder: (context, ref, child) {
+              return IconButton(
+                onPressed: () async {
+                  // themeState.
+                  // final List<MovieModel> movies = await getIt<ApiService>().fetchMovies();
+                  // log("movies $movies");
+                  // final List<MoviesGenre> genres =
+                  //     await getIt<MoviesRepository>().fetchGenres();
+                  // await getIt<ApiService>().fetchGenres();
 
-              // log("Genres are $genres");
-              // themeState.toggleTheme();
-              await ref.read(themeProvider.notifier).toggleTheme();
+                  // log("Genres are $genres");
+                  // themeState.toggleTheme();
+                  await ref.read(themeProvider.notifier).toggleTheme();
+                },
+                icon: Icon(
+                  themeState == ThemeEnums.dark
+                      ? MyAppIcons.darkMode
+                      : MyAppIcons.lightMode,
+                ),
+              );
             },
-            icon: Icon(
-              themeState == ThemeEnums.dark
-                  ? MyAppIcons.darkMode
-                  : MyAppIcons.lightMode,
-            ),
-          ),
+          )
         ],
       ),
       body: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
-          return MoviesWidget();
+          return const MoviesWidget();
         },
       ),
     );
   }
 }
 
-
-//! 63 start
+//! 64 start
