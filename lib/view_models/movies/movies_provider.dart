@@ -1,0 +1,29 @@
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:mvvm_statemanagements/models/movies_model.dart';
+import 'package:mvvm_statemanagements/repository/movies_repo.dart';
+import 'package:mvvm_statemanagements/service/init_getit.dart';
+import 'package:mvvm_statemanagements/view_models/movies/movies_state.dart';
+
+class MoviesProvider extends StateNotifier<MoviesState> {
+  MoviesProvider() : super(MoviesState());
+  final MoviesRepository _moviesRepository = getIt<MoviesRepository>();
+
+  Future<void> getMovies() async {
+    state = state.copyWith(isLoading: true);
+    try {
+      if (state.genresList.isEmpty) {
+        final genresList = await _moviesRepository.fetchGenres();
+        state = state.copyWith(genresList: genresList);
+      }
+      List<MovieModel> moviesList =
+      await _moviesRepository.fetchMovies(page: state.currentPage);
+      state.copyWith(
+          moviesList: [...state.moviesList, ...moviesList],
+          fetchMoviesError: "",
+          isLoading: false,
+          currentPage: state.currentPage + 1);
+    } catch (e) {
+      state = state.copyWith(fetchMoviesError: e.toString(),isLoading: false);
+    }
+  }
+}
