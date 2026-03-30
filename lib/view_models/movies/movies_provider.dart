@@ -4,6 +4,9 @@ import 'package:mvvm_statemanagements/repository/movies_repo.dart';
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/view_models/movies/movies_state.dart';
 
+final moviesProvider = StateNotifierProvider<MoviesProvider,
+    MoviesState>((_) =>MoviesProvider());
+
 class MoviesProvider extends StateNotifier<MoviesState> {
   MoviesProvider() : super(MoviesState());
   final MoviesRepository _moviesRepository = getIt<MoviesRepository>();
@@ -23,7 +26,7 @@ class MoviesProvider extends StateNotifier<MoviesState> {
           isLoading: false,
           currentPage: state.currentPage + 1);
     } catch (e) {
-      state = state.copyWith(fetchMoviesError: e.toString(),isLoading: false);
+      state = state.copyWith(fetchMoviesError: e.toString(), isLoading: false);
     }
   }
 }

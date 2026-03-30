@@ -39,8 +39,9 @@ class MyApp extends ConsumerWidget {
       theme: themeState == ThemeEnums.light
           ? MyThemeData.lightTheme
           : MyThemeData.darkTheme,
-      home: const MoviesScreen(),
+      home: const SplashScreen(),
       // const SplashScreen(), //const MovieDetailsScreen(), //const FavoritesScreen(), //const MoviesScreen(),
     );
   }
 }
+//! 68. 04:07
