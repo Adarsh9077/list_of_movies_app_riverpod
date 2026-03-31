@@ -18,7 +18,7 @@ class SplashScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final moviesStateProvider = ref.watch(moviesProvider);
+    // final moviesStateProvider = ref.watch(moviesProvider);
     return Scaffold(
         body: FutureBuilder(
       future: _loadInitialData(ref),
@@ -26,7 +26,7 @@ class SplashScreen extends ConsumerWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          if (moviesStateProvider.genresList.isNotEmpty) {
+          if (ref.watch(moviesProvider).genresList.isNotEmpty) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               getIt<NavigationService>().navigateReplace(const MoviesScreen());
             });
