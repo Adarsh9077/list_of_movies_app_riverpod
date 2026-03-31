@@ -20,43 +20,31 @@ class SplashScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // final moviesStateProvider = ref.watch(moviesProvider);
     return Scaffold(
-        body: FutureBuilder(
-      future: _loadInitialData(ref),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          if (ref.watch(moviesProvider).genresList.isNotEmpty) {
+      body: FutureBuilder(
+        future: _loadInitialData(ref),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            if (ref.watch(moviesProvider).genresList.isNotEmpty) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                getIt<NavigationService>()
+                    .navigateReplace(const MoviesScreen());
+              });
+            }
+            return MyErrorWidget(
+                errorText: snapshot.hasError.toString(),
+                retryFunction: () async {
+                  _loadInitialData(ref);
+                });
+          } else {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               getIt<NavigationService>().navigateReplace(const MoviesScreen());
             });
           }
-          return MyErrorWidget(
-              errorText: snapshot.hasError.toString(),
-              retryFunction: () async {
-                _loadInitialData(ref);
-              });
-        } else {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            getIt<NavigationService>().navigateReplace(const MoviesScreen());
-          });
-        }
-        return const SizedBox.shrink();
-      },
-    )
-        // true
-        //     ? const Center(
-        //         child: Column(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           crossAxisAlignment: CrossAxisAlignment.center,
-        //           children: [
-        //             Text("Loading..."),
-        //             SizedBox(height: 20),
-        //             CircularProgressIndicator.adaptive(),
-        //           ],
-        //         ),
-        //       )
-        //     : MyErrorWidget(errorText: '_errorMessage', retryFunction: () {}),
-        );
+          return const SizedBox.shrink();
+        },
+      ),
+    );
   }
 }
