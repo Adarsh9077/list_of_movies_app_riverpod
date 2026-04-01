@@ -6,7 +6,6 @@ import 'package:mvvm_statemanagements/enums/theme_enums.dart';
 import 'package:mvvm_statemanagements/view_models/theme_provider.dart';
 
 import 'constants/my_theme_data.dart';
-import 'screens/movies_screen.dart';
 import 'screens/splash_screen.dart';
 import 'service/init_getit.dart';
 import 'service/navigation_service.dart';
@@ -44,4 +43,4 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
-//! 68. 04:07
+//! 68. 06:04
