@@ -24,7 +24,9 @@ class SplashScreen extends ConsumerWidget {
         future: _loadInitialData(ref),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return Container(
+                color: Colors.white,
+                child: const Center(child: CircularProgressIndicator()));
           } else if (snapshot.hasError) {
             if (ref.watch(moviesProvider).genresList.isNotEmpty) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
