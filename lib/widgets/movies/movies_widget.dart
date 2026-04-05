@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mvvm_statemanagements/constants/my_app_constants.dart';
 import 'package:mvvm_statemanagements/constants/my_app_icons.dart';
 import 'package:mvvm_statemanagements/screens/movie_details.dart';
+import 'package:mvvm_statemanagements/view_models/movies/movies_provider.dart';
 import '../../models/movies_model.dart';
 import '../../service/init_getit.dart';
 import '../../service/navigation_service.dart';
@@ -9,15 +11,14 @@ import '../cached_image.dart';
 import 'favorite_btn.dart';
 import 'genres_list_widget.dart';
 
-class MoviesWidget extends StatelessWidget {
-  const MoviesWidget({
-    super.key,
-    // required this.movieModel
-  });
+class MoviesWidget extends ConsumerWidget {
+  const MoviesWidget({super.key, required this.index});
 
-  // final MovieModel movieModel;
+  final int index;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final movieState = ref.watch(currentMovie(index));
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(

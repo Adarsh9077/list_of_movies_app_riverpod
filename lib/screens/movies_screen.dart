@@ -80,7 +80,7 @@ class MoviesScreen extends ConsumerWidget {
               },
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return const MoviesWidget();
+                  return MoviesWidget(index: index,);
                 },
               ),
             );
