@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:mvvm_statemanagements/constants/api_constants.dart';
@@ -7,6 +8,7 @@ import 'package:mvvm_statemanagements/models/movies_model.dart';
 
 class ApiService {
   Future<List<MovieModel>> fetchMovies({int page = 1}) async {
+    log("message");
     final url = Uri.parse(
         "${ApiConstants.baseUrl}/movie/popular?language=en-US&page=$page");
     final response = await http
@@ -14,7 +16,7 @@ class ApiService {
         .timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      // log("data $data");
+      log("data $data");
       return List.from(
           data['results'].map((element) => MovieModel.fromJson(element)));
     } else {

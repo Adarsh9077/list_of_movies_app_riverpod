@@ -42,35 +42,5 @@ class SplashScreen extends ConsumerWidget {
         return const CircularProgressIndicator.adaptive();
       }),
     );
-
-    //   Scaffold(
-    //   body: FutureBuilder(
-    //     future: _loadInitialData(ref),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return Container(
-    //             color: Colors.white,
-    //             child: const Center(child: CircularProgressIndicator()));
-    //       } else if (snapshot.hasError) {
-    //         if (ref.watch(moviesProvider).genresList.isNotEmpty) {
-    //           WidgetsBinding.instance.addPostFrameCallback((_) {
-    //             getIt<NavigationService>()
-    //                 .navigateReplace(const MoviesScreen());
-    //           });
-    //         }
-    //         return MyErrorWidget(
-    //             errorText: snapshot.hasError.toString(),
-    //             retryFunction: () async {
-    //               _loadInitialData(ref);
-    //             });
-    //       } else {
-    //         WidgetsBinding.instance.addPostFrameCallback((_) {
-    //           getIt<NavigationService>().navigateReplace(const MoviesScreen());
-    //         });
-    //       }
-    //       return const SizedBox.shrink();
-    //     },
-    //   ),
-    // );
   }
 }

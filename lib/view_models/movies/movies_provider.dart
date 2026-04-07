@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:mvvm_statemanagements/models/movies_model.dart';
@@ -5,10 +7,10 @@ import 'package:mvvm_statemanagements/repository/movies_repo.dart';
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/view_models/movies/movies_state.dart';
 
-final moviesProvider = StateNotifierProvider<MoviesProvider,
-    MoviesState>((_) =>MoviesProvider());
+final moviesProvider =
+    StateNotifierProvider<MoviesProvider, MoviesState>((_) => MoviesProvider());
 
-final currentMovie = Provider.family<MovieModel,int>((ref,index){
+final currentMovie = Provider.family<MovieModel, int>((ref, index) {
   final movieState = ref.watch(moviesProvider);
   return movieState.moviesList[index];
 });
@@ -18,6 +20,7 @@ class MoviesProvider extends StateNotifier<MoviesState> {
   final MoviesRepository _moviesRepository = getIt<MoviesRepository>();
 
   Future<void> getMovies() async {
+    if (state.isLoading) return;
     state = state.copyWith(isLoading: true);
     try {
       if (state.genresList.isEmpty) {
@@ -25,8 +28,9 @@ class MoviesProvider extends StateNotifier<MoviesState> {
         state = state.copyWith(genresList: genresList);
       }
       List<MovieModel> moviesList =
-      await _moviesRepository.fetchMovies(page: state.currentPage);
-      state.copyWith(
+          await _moviesRepository.fetchMovies(page: state.currentPage);
+      log("message--</> \n${moviesList.length}");
+      state = state.copyWith(
           moviesList: [...state.moviesList, ...moviesList],
           fetchMoviesError: "",
           isLoading: false,

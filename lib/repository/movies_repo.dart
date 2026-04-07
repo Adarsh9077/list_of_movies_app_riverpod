@@ -5,10 +5,11 @@ import '../models/movies_model.dart';
 
 class MoviesRepository {
   final ApiService _apiService;
+
   MoviesRepository(this._apiService);
 
-  Future<List<MovieModel>> fetchMovies({int page = 1}) async {
-    return await _apiService.fetchMovies(page: page);
+  Future<List<MovieModel>> fetchMovies({int? page}) async {
+    return await _apiService.fetchMovies(page: page ?? 1);
   }
 
   // List<MoviesGenre> cachedGenres = [];
