@@ -1,6 +1,13 @@
+import 'dart:convert';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:mvvm_statemanagements/models/movies_model.dart';
 import 'package:mvvm_statemanagements/view_models/favorite/l/favorite_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final favoriteProvider = StateNotifierProvider<FavoriteProvider,FavoriteState>((ref){
+  return FavoriteProvider();
+
+});
 
 class FavoriteProvider extends StateNotifier<FavoriteState> {
   FavoriteProvider() : super(FavoriteState());
@@ -16,7 +23,28 @@ class FavoriteProvider extends StateNotifier<FavoriteState> {
     } else {
       state.copyWith().favoritesList.add(movieModel);
     }
-    //! await saveFavorite();
-    //? 76.  4:44
+    await saveFavorite();
+  }
+
+  Future<void> saveFavorite() async {
+    final pref = await SharedPreferences.getInstance();
+    final stringList = state.favoritesList
+        .map((movie) => json.encode(movie.toJson()))
+        .toList();
+    pref.setStringList(favKey, stringList);
+  }
+
+  Future<void> loadFavorites() async {
+    final pref = await SharedPreferences.getInstance();
+    final stringList = pref.getStringList(favKey) ?? [];
+    state.favoritesList.clear();
+    state.favoritesList.addAll(
+        stringList.map((movie) => MovieModel.fromJson(json.decode(movie))));
+  }
+
+  Future<void> clearAll () async{
+    state.favoritesList.clear();
+
+    saveFavorite();
   }
 }
