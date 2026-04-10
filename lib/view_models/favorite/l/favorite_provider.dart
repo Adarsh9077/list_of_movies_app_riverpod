@@ -4,9 +4,9 @@ import 'package:mvvm_statemanagements/models/movies_model.dart';
 import 'package:mvvm_statemanagements/view_models/favorite/l/favorite_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final favoriteProvider = StateNotifierProvider<FavoriteProvider,FavoriteState>((ref){
+final favoriteProvider =
+    StateNotifierProvider<FavoriteProvider, FavoriteState>((ref) {
   return FavoriteProvider();
-
 });
 
 class FavoriteProvider extends StateNotifier<FavoriteState> {
@@ -18,11 +18,19 @@ class FavoriteProvider extends StateNotifier<FavoriteState> {
   }
 
   Future<void> addOrRemoveFromFavorites(MovieModel movieModel) async {
-    if (isFavorite(movieModel)) {
-      state.favoritesList.removeWhere((movie) => movie.id == movieModel.id);
-    } else {
-      state.copyWith().favoritesList.add(movieModel);
-    }
+    final wasFavorite = isFavorite(movieModel);
+    List<MovieModel> updateFavorite = wasFavorite
+        ? state.favoritesList
+            .where((element) => element.id != movieModel.id)
+            .toList()
+        : [...state.favoritesList, movieModel];
+    state = state.copyWith(favoritesList: updateFavorite);
+    //!
+    // if (isFavorite(movieModel)) {
+    //   state.favoritesList.removeWhere((movie) => movie.id == movieModel.id);
+    // } else {
+    //   state.copyWith().favoritesList.add(movieModel);
+    // }
     await saveFavorite();
   }
 
@@ -37,12 +45,16 @@ class FavoriteProvider extends StateNotifier<FavoriteState> {
   Future<void> loadFavorites() async {
     final pref = await SharedPreferences.getInstance();
     final stringList = pref.getStringList(favKey) ?? [];
-    state.favoritesList.clear();
-    state.favoritesList.addAll(
-        stringList.map((movie) => MovieModel.fromJson(json.decode(movie))));
+    final movies = stringList
+        .map((movie) => MovieModel.fromJson(jsonDecode(movie)))
+        .toList();
+    state = state.copyWith(favoritesList: movies);
+    // state.favoritesList.clear();
+    // state.favoritesList.addAll(
+    //     stringList.map((movie) => MovieModel.fromJson(json.decode(movie))));
   }
 
-  Future<void> clearAll () async{
+  Future<void> clearAll() async {
     state.favoritesList.clear();
 
     saveFavorite();

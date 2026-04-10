@@ -9,13 +9,14 @@ import '../widgets/cached_image.dart';
 import '../widgets/movies/genres_list_widget.dart';
 
 class MovieDetailsScreen extends ConsumerWidget {
-  const MovieDetailsScreen({super.key, required this.index});
+  const MovieDetailsScreen({super.key, required this.movieModel});
 
-  final int index;
+  // final int index;
+  final MovieModel movieModel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movieModel = ref.watch(currentMovie(index));
+    // final movieModel = ref.watch(currentMovie(index));
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: SafeArea(
@@ -104,11 +105,11 @@ class MovieDetailsScreen extends ConsumerWidget {
                             color: Theme.of(context).cardColor,
                             shape: BoxShape.circle,
                           ),
-                          child: const Padding(
-                              padding: EdgeInsets.all(6.0),
+                          child: Padding(
+                              padding: const EdgeInsets.all(6.0),
                               child: FavoriteBtnWidget(
-                                  // movieModel: movieModel,
-                                  )),
+                                movieModel: movieModel,
+                              )),
                         ),
                       ),
                     ],
@@ -133,3 +134,4 @@ class MovieDetailsScreen extends ConsumerWidget {
     );
   }
 }
+// ! 78:00 start............

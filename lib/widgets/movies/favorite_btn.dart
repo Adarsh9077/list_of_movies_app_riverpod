@@ -23,12 +23,15 @@ class FavoriteBtnWidget extends ConsumerWidget {
     return IconButton(
         onPressed: () {
           // TODO: Implement the favorite logic
+          ref
+              .read(favoriteProvider.notifier)
+              .addOrRemoveFromFavorites(movieModel);
         },
         icon: Icon(
           isFavorite
               ? MyAppIcons.favoriteOutlineRounded
               : MyAppIcons.favoriteRounded,
-          color: isFavorite ? Colors.red : null,
+          color: isFavorite ? Colors.red : Colors.red,
           size: 20,
         ));
   }

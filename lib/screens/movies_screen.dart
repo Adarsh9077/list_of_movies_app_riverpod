@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mvvm_statemanagements/enums/theme_enums.dart';
+import 'package:mvvm_statemanagements/models/movies_model.dart';
 import 'package:mvvm_statemanagements/view_models/movies/movies_provider.dart';
 import 'package:mvvm_statemanagements/view_models/theme_provider.dart';
 
@@ -82,7 +83,7 @@ class MoviesScreen extends ConsumerWidget {
               itemCount: movieState.moviesList.length,
               itemBuilder: (context, index) {
                 return MoviesWidget(
-                  index: index,
+                  movieModel: movieState.moviesList[index],
                 );
               },
             ),
