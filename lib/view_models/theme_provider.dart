@@ -32,5 +32,3 @@ class ThemeProvider extends StateNotifier<ThemeEnums> {
     }
   }
 }
-
-//! 10:30 62 (13min)

@@ -55,7 +55,7 @@ class FavoriteProvider extends StateNotifier<FavoriteState> {
   }
 
   Future<void> clearAll() async {
-    state.favoritesList.clear();
+    state = state.copyWith(favoritesList: []);
 
     saveFavorite();
   }

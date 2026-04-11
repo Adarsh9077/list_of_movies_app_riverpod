@@ -9,13 +9,16 @@ class FavoritesScreen extends ConsumerWidget {
   const FavoritesScreen({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteState = ref.watch(favoriteProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Favorite Movies"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              ref.read(favoriteProvider.notifier).clearAll();
+            },
             icon: const Icon(
               MyAppIcons.delete,
               color: Colors.red,
@@ -23,11 +26,12 @@ class FavoritesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: 10,
+      body: favoriteState.favoritesList.isEmpty?const Center(child: Text("No added Favrates"),) :
+      ListView.builder(
+        itemCount: favoriteState.favoritesList.length,
         itemBuilder: (context, index) {
           return MoviesWidget(
-            movieModel: ,
+            movieModel: favoriteState.favoritesList.reversed.toList()[index],
           ); //const Text("data");
         },
       ),
