@@ -26,15 +26,19 @@ class FavoritesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: favoriteState.favoritesList.isEmpty?const Center(child: Text("No added Favrates"),) :
-      ListView.builder(
-        itemCount: favoriteState.favoritesList.length,
-        itemBuilder: (context, index) {
-          return MoviesWidget(
-            movieModel: favoriteState.favoritesList.reversed.toList()[index],
-          ); //const Text("data");
-        },
-      ),
+      body: favoriteState.favoritesList.isEmpty
+          ? const Center(
+              child: Text("No added Favorites"),
+            )
+          : ListView.builder(
+              itemCount: favoriteState.favoritesList.length,
+              itemBuilder: (context, index) {
+                return MoviesWidget(
+                  movieModel:
+                      favoriteState.favoritesList.reversed.toList()[index],
+                ); //const Text("data");
+              },
+            ),
     );
   }
 }
