@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mvvm_statemanagements/enums/theme_enums.dart';
+import 'package:mvvm_statemanagements/logs/riverpod_observer.dart';
 import 'package:mvvm_statemanagements/view_models/theme_provider.dart';
 
 import 'constants/my_theme_data.dart';
@@ -20,7 +21,7 @@ void main() {
   ]).then((_) async {
     await dotenv.load(fileName: "assets/.env");
     // runApp(const MyApp());
-    runApp(const ProviderScope(child: MyApp()));
+    runApp(ProviderScope(observers: [RiverpodObserver()], child:const MyApp()));
   });
 }
 
