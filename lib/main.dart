@@ -21,7 +21,8 @@ void main() {
   ]).then((_) async {
     await dotenv.load(fileName: "assets/.env");
     // runApp(const MyApp());
-    runApp(ProviderScope(observers: [RiverpodObserver()], child:const MyApp()));
+    runApp(
+        ProviderScope(observers: [RiverpodObserver()], child: const MyApp()));
   });
 }
 
